@@ -74,7 +74,7 @@ function App() {
         <>
           <div className="App">
             <div className="issues">
-            <label>Problem: </label>
+              <label>Problem: </label>
               <select id="issues" onChange={this.selectBrand}>
                 <option value="issues">Problem</option>
                 {this.state.issues.map((val, key) => {
@@ -110,10 +110,10 @@ function App() {
       this.setState({ change: true });
     };
 
-    //Diganostic regex filter
+    //Diaganostic regexp filter
     replaceRegex = (value) => {
       let reg = new RegExp(`\\d\\W\\S\\b${userInput.issue.toLowerCase()}\\b\\W\\W`);
-      let newValue = value.replace(reg,'');
+      let newValue = value.replace(reg, '');
       return newValue
     }
 
@@ -122,7 +122,7 @@ function App() {
         <>
           <div className="App">
             <div className="diagnosticsues">
-            <label>Diagnos: </label>
+              <label>Diagnos: </label>
               <select id="diagnostics" onChange={this.selectBrand}>
                 <option value="diagnostics">Diagnos</option>
                 {this.state.diagnostics.map((val, key) => {
@@ -156,29 +156,29 @@ function App() {
       console.log(event.target.value)
       this.setState({ change: true });
     };
-    //Remedy regex filter
+    //Remedy regexp filter
     replaceRegex = (value) => {
       let reg = new RegExp(`\\d\\d\\W\\S\\b${userInput.issue.toLowerCase()}\\b\\W\\W`);
-      let newValue = value.replace(reg,'');
+      let newValue = value.replace(reg, '');
       return newValue
     }
 
-    clearList(){};
+    clearList() { };
 
     render() {
       return (
         <>
           <form onSubmit={this.clearList}>
-          <div className="App">
-            <div className="remedy">
-              <p>Lösning</p>
-              {this.state.remedy.map((val, key) => {
-                return <h3 key={key} value={this.replaceRegex(val.remedy)}>{this.replaceRegex(val.remedy)}</h3>
-              })}
-              <button class="btn" type='submit'>Submit</button>
+            <div className="App">
+              <div className="remedy">
+                <p>Lösning</p>
+                {this.state.remedy.map((val, key) => {
+                  return <h3 key={key} value={this.replaceRegex(val.remedy)}>{this.replaceRegex(val.remedy)}</h3>
+                })}
+                <button class="btn" type='submit'>Submit</button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
         </>
       )
     }
