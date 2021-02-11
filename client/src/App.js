@@ -1,7 +1,8 @@
 import './App.css';
 import Axios from "axios";
 import React from "react";
-//jag var tvungen att kommentera något för att uppdatera
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 function App() {
 
   // varibel för att ta emot användarens val i dropdown lista
@@ -32,6 +33,8 @@ function App() {
     render() {
       return (
         <>
+          {/*Knapp för kontakt sidan*/}
+          <button className="btn-contact">Kontakt</button>
           <div className="App">
             <div>
               <select onChange={this.selectHandler}>
@@ -185,7 +188,7 @@ function App() {
           <form onSubmit={this.clearList}>
             <div className="App">
               <div>
-                <p>Lösning</p>
+                <p id="margin-remedy">Lösning</p>
                 {this.state.remedy.map((val, key) => {
                   return <h3 key={key} value={this.replaceRegex(val.remedy)}>{this.replaceRegex(val.remedy)}</h3>
                 })}
@@ -197,10 +200,45 @@ function App() {
       )
     }
   }
+
+  function contact() {
+    return (
+      <div className="section-contact">
+        <div className="main-contact">
+          <div class="bk-img">
+            <div className="information-contact">
+              <div>
+                <h2>Kontakta oss</h2>
+                <p>LorryDoc AB</p>
+                <p>Stockholmsvägen 123</p>
+                <p>Öppettider : kl 07-21</p>
+                <p>Telefon Nummer : 08-113 112 80</p>
+                <p>Epost : lorrydoc@gmail.com</p>
+                <br />
+                <h2>Lite om oss</h2>
+                <p>LorryDoc var skapad för att undersöka <br />
+                problemet innan man ringer till <br />
+                verkstad, oftast så är det små saker som <br />
+                du kan fixa själv och det är då <br />
+                LorryDoc kommer till hjälp </p>
+              </div>
+            </div>
+            <footer className="footer-contact">
+              <div className="page-contact">
+                <button className="btn-home">Tillbaka</button>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <>
-      <Brands />
-    </>
+    <Router>
+      <Route path="/" component={Brands} exact={true} />
+      <Route path="/contact" component={contact} />
+    </Router>
   )
 }
 export default App;
