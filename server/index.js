@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors());
 
+// vi sparar vår personliga information för connection i en .env fil som sedan ignoreras i gitignore så den inte laddas i github
 const db = mysql.createConnection({
   host: process.env.HOST,
   user: process.env.USER,
@@ -21,7 +22,7 @@ const brands = "SELECT Brand FROM allcolumn WHERE brand IS NOT NULL";
 const issues = "SELECT Issue FROM allcolumn WHERE issue IS NOT NULL";
 
 
-
+// get för databas märke
 app.get("/brand", (req, res) => {
   db.query(brands, (err, result) => {
     if (err) {
@@ -32,6 +33,7 @@ app.get("/brand", (req, res) => {
   });
 });
 
+// get för databas problem
 app.get("/issue", (req, res) => {
   db.query(issues, (err, result) => {
     if (err) {
@@ -42,8 +44,10 @@ app.get("/issue", (req, res) => {
   });
 })
 
+// get för databas diagnos
 app.get("/diagnostics/:issue", (req, res) => {
 
+  // switch sats som tar emot input från användare som i sin tur kör olika mysql select
   switch (req.params.issue) {
     case 'Motor':
       db.query("SELECT diagnostics FROM AllColumn where diagnostics REGEXP 'motor'", (err, result) => {
@@ -90,8 +94,10 @@ app.get("/diagnostics/:issue", (req, res) => {
   };
 });
 
+// get för databas lösning
 app.get("/remedy/:diagnostics", (req, res) => {
 
+  // switch sats som tar emot input från användare som i sin tur kör olika mysql select
   switch (req.params.diagnostics) {
     case 'Motorlampa tänd':
       db.query("SELECT remedy FROM AllColumn where remedy REGEXP '11'", (err, result) => {

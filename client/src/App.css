@@ -68,12 +68,6 @@ main {
 
 }
 
-option {
-  width: 300px;
-  height: 40px;
-  color: white;
-}
-
 h2,h3,p {
   margin-top: 0;
   color: white;

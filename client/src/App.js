@@ -4,8 +4,10 @@ import React from "react";
 //jag var tvungen att kommentera något för att uppdatera
 function App() {
 
+  // varibel för att ta emot användarens val i dropdown lista
   const userInput = [{ brand: "", issue: "", diagnostics: "", remedy: "" }];
 
+  // class som hanterar val av märken från databas
   class Brands extends React.Component {
     constructor(props) {
       super(props);
@@ -15,14 +17,15 @@ function App() {
       }
     }
 
+    // get request för att hämta märken från databas
     componentDidMount() {
       Axios.get("http://localhost:3001/brand").then((response) => {
         this.setState({ brands: response.data });
       });
     }
 
-    selectBrand = (event) => {
-      console.log(event.target.value)
+    // funktion för att kolla om val har gjorts i dropdown meny
+    selectHandler = (event) => {
       this.setState({ change: true });
     };
 
@@ -30,14 +33,15 @@ function App() {
       return (
         <>
           <div className="App">
-            <div className="brands">
-              <select id="cars" onChange={this.selectBrand}>
+            <div>
+              <select onChange={this.selectHandler}>
                 <option value="märke">Välj Märke</option>
                 {this.state.brands.map((val, key) => {
-                  return <option id="option" key={key} value={val.Brand}>{val.Brand}</option>
+                  return <option key={key} value={val.Brand}>{val.Brand}</option>
                 })}
               </select>
             </div>
+            {/*När change eller lika med true, så visas problem classen på sidan*/}
             {this.state.change ? <Issue /> : null}
           </div>
         </>
@@ -45,6 +49,7 @@ function App() {
     }
   }
 
+  // class som hanterar val av problem från databas
   class Issue extends React.Component {
     constructor(props) {
       super(props);
@@ -54,16 +59,17 @@ function App() {
       }
     }
 
+    // get request för att hämta problem från databas
     componentDidMount() {
       Axios.get("http://localhost:3001/issue/").then((response) => {
         this.setState({ issues: response.data });
       });
     }
 
-
-    selectBrand = (event) => {
+    // funktion för att kolla om val har gjorts i dropdown meny
+    // sparar användarens val från dropdown
+    selectHandler = (event) => {
       userInput['issue'] = event.target.value;
-      console.log(event.target.value)
       this.setState({ change: true });
     };
 
@@ -73,15 +79,16 @@ function App() {
       return (
         <>
           <div className="App">
-            <div className="issues">
+            <div>
               <label>Problem: </label>
-              <select id="issues" onChange={this.selectBrand}>
+              <select onChange={this.selectHandler}>
                 <option value="issues">Problem</option>
                 {this.state.issues.map((val, key) => {
                   return <option key={key} value={val.Issue}>{val.Issue}</option>
                 })}
               </select>
             </div>
+            {/*När change eller lika med true, så visas diagnos classen på sidan*/}
             {this.state.change ? <Diagnostics /> : null}
           </div>
         </>
@@ -89,6 +96,7 @@ function App() {
     }
   }
 
+  // class som hanterar val av diagnos från databas
   class Diagnostics extends React.Component {
     constructor(props) {
       super(props);
@@ -98,15 +106,17 @@ function App() {
       }
     }
 
+    // get request för att hämta diagnos från databas
     componentDidMount() {
       Axios.get(`http://localhost:3001/diagnostics/${userInput.issue}`).then((response) => {
         this.setState({ diagnostics: response.data });
       });
     }
 
-    selectBrand = (event) => {
+    // funktion för att kolla om val har gjorts i dropdown meny
+    // sparar användarens val från dropdown
+    selectHandler = (event) => {
       userInput['diagnostics'] = event.target.value;
-      console.log(event.target.value);
       this.setState({ change: true });
     };
 
@@ -121,9 +131,9 @@ function App() {
       return (
         <>
           <div className="App">
-            <div className="diagnosticsues">
+            <div>
               <label>Diagnos: </label>
-              <select id="diagnostics" onChange={this.selectBrand}>
+              <select onChange={this.selectHandler}>
                 <option value="diagnostics">Diagnos</option>
                 {this.state.diagnostics.map((val, key) => {
                   return <option key={key} value={this.replaceRegex(val.diagnostics)}>{this.replaceRegex(val.diagnostics)}</option>
@@ -137,6 +147,7 @@ function App() {
     }
   }
 
+  // class som hanterar val av lösning från databas
   class Remedy extends React.Component {
     constructor(props) {
       super(props);
@@ -146,16 +157,19 @@ function App() {
       }
     }
 
+    // get request för att hämta lösning från databas
     componentDidMount() {
       Axios.get(`http://localhost:3001/remedy/${userInput.diagnostics}`).then((response) => {
         this.setState({ remedy: response.data });
       });
     }
 
-    selectBrand = (event) => {
-      console.log(event.target.value)
+    // funktion för att kolla om val har gjorts i dropdown meny
+    // sparar användarens val från dropdown
+    selectHandler = (event) => {
       this.setState({ change: true });
     };
+
     //Remedy regexp filter
     replaceRegex = (value) => {
       let reg = new RegExp(`\\d\\d\\W\\S\\b${userInput.issue.toLowerCase()}\\b\\W\\W`);
@@ -170,12 +184,12 @@ function App() {
         <>
           <form onSubmit={this.clearList}>
             <div className="App">
-              <div className="remedy">
+              <div>
                 <p>Lösning</p>
                 {this.state.remedy.map((val, key) => {
                   return <h3 key={key} value={this.replaceRegex(val.remedy)}>{this.replaceRegex(val.remedy)}</h3>
                 })}
-                <button class="btn" type='submit'>Submit</button>
+                <button className="btn" type='submit'>Submit</button>
               </div>
             </div>
           </form>
