@@ -1,7 +1,7 @@
 import './App.css';
 import Axios from "axios";
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 function App() {
 
@@ -34,11 +34,11 @@ function App() {
       return (
         <>
           {/*Knapp för kontakt sidan*/}
-          <button className="btn-contact">Kontakt</button>
+          <button className="btn-contact"><Link to="/contact">Kontakt</Link></button>
           <div className="App">
             <div>
               <select onChange={this.selectHandler}>
-                <option value="märke">Välj Märke</option>
+                <option>Välj märke</option>
                 {this.state.brands.map((val, key) => {
                   return <option key={key} value={val.Brand}>{val.Brand}</option>
                 })}
@@ -83,9 +83,8 @@ function App() {
         <>
           <div className="App">
             <div>
-              <label>Problem: </label>
               <select onChange={this.selectHandler}>
-                <option value="issues">Problem</option>
+                <option>Problem</option>
                 {this.state.issues.map((val, key) => {
                   return <option key={key} value={val.Issue}>{val.Issue}</option>
                 })}
@@ -135,9 +134,8 @@ function App() {
         <>
           <div className="App">
             <div>
-              <label>Diagnos: </label>
               <select onChange={this.selectHandler}>
-                <option value="diagnostics">Diagnos</option>
+                <option>Diagnos</option>
                 {this.state.diagnostics.map((val, key) => {
                   return <option key={key} value={this.replaceRegex(val.diagnostics)}>{this.replaceRegex(val.diagnostics)}</option>
                 })}
@@ -201,34 +199,29 @@ function App() {
     }
   }
 
+  // funktion för kontakt sidan
   function contact() {
     return (
       <div className="section-contact">
         <div className="main-contact">
-          <div class="bk-img">
-            <div className="information-contact">
-              <div>
-                <h2>Kontakta oss</h2>
-                <p>LorryDoc AB</p>
-                <p>Stockholmsvägen 123</p>
-                <p>Öppettider : kl 07-21</p>
-                <p>Telefon Nummer : 08-113 112 80</p>
-                <p>Epost : lorrydoc@gmail.com</p>
-                <br />
-                <h2>Lite om oss</h2>
-                <p>LorryDoc var skapad för att undersöka <br />
+          <div className="information-contact">
+            <div>
+              <h2>Kontakta oss</h2>
+              <p>LorryDoc AB</p>
+              <p>Stockholmsvägen 123</p>
+              <p>Öppettider : kl 07-21</p>
+              <p>Telefon Nummer : 08-113 112 80</p>
+              <p>Epost : lorrydoc@gmail.com</p>
+              <br />
+              <h2>Lite om oss</h2>
+              <p>LorryDoc var skapad för att undersöka <br />
                 problemet innan man ringer till <br />
                 verkstad, oftast så är det små saker som <br />
                 du kan fixa själv och det är då <br />
                 LorryDoc kommer till hjälp </p>
-              </div>
             </div>
-            <footer className="footer-contact">
-              <div className="page-contact">
-                <button className="btn-home">Tillbaka</button>
-              </div>
-            </footer>
           </div>
+          <button className="btn-home"><Link to="/">Hem</Link></button>
         </div>
       </div>
     )
