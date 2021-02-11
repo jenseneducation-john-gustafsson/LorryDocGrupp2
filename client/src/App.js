@@ -1,7 +1,7 @@
 import './App.css';
 import Axios from "axios";
 import React from "react";
-
+//jag var tvungen att kommentera något för att uppdatera
 function App() {
 
   const userInput = [{ brand: "", issue: "", diagnostics: "", remedy: "" }];
